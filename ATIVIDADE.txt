@@ -1,0 +1,23 @@
+1. Criar projeto com estrutura base - ok
+
+2. Node - NPM
+
+npm init
+npm install
+npm install json-server
+
+3. Alterar os scripts no package.json - ok
+
+add o script start com json-server ./data/products2.json
+
+4. No app.js
+
+1. declarar variáveis referentes ao form e usar document.querySelector - ok
+2. Criar método load - ok
+2.1 Método fecth- ok
+2.2 Atenção a promises / async / await-ok
+2.3 Métodos de array: map - ok
+2.4 Collection: Set-ok
+2.5 Restructuring arrays
+3. Alterar loadDetails e productItem- ok
+3.1 Usando string literal colocar as propriedades do produto
