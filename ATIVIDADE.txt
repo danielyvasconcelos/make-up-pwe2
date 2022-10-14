@@ -1,23 +1,255 @@
 1. Criar projeto com estrutura base - ok
 
-2. Node - NPM
+2. Node - NPM - ok
 
 npm init
 npm install
-npm install json-server
+npm install json-server - simula um servidor
 
 3. Alterar os scripts no package.json - ok
 
-add o script start com json-server ./data/products2.json
+add o script start com json-server ./data/products2.json - ok
 
 4. No app.js
 
 1. declarar variáveis referentes ao form e usar document.querySelector - ok
 2. Criar método load - ok
 2.1 Método fecth- ok
-2.2 Atenção a promises / async / await-ok
+2.2 Atenção a promises / async / await-ok //programação assicrona 
 2.3 Métodos de array: map - ok
 2.4 Collection: Set-ok
 2.5 Restructuring arrays
 3. Alterar loadDetails e productItem- ok
 3.1 Usando string literal colocar as propriedades do produto
+-------------------------------------------------------------------------------------------
+Seguir as instruções a abaixo e realizar os estudos necessários:
+
+1. Importar projeto com estrutura base - atenção a pasta raiz
+
+2. Node - NPM
+
+    /* caso nao haja o package.json */
+
+        npm init 
+
+        npm install json-server
+
+    /* havendo package.json */
+
+        npm install
+
+3. Alterar os scripts no package.json
+
+    add no campo script a tag "start": "json-server ./data/products2.json"
+
+    Rodar backend
+
+    npm start
+
+    observe se deu tudo certo no terminal e teste a url no navegador!
+
+ 
+
+AGORA COMEÇAR O TRABALHO
+
+No app.js
+
+1. declarar variáveis referentes aos inputs e selects form e usar document.querySelector
+
+2. Declarar a variável que vai receber todos os produtos
+
+3. Criar método load - que vai carregar os produtos
+
+    
+
+    3.1 Carregar a lista de produtos: 
+
+        3.1.1 Método fecth - URL/Promises (estudar e entender o método then executado ao final no processo assíncrono)
+
+        3.1.2 Atenção a promises / async - await (estudar)
+
+    3.2 Carregar as brands e types
+
+        3.2.1 Métodos de array: Map - iterando e recuperando o necessário
+
+        3.2.2 Collection: Set - removendo a duplicação
+
+        3.2.3 Restructuring arrays - transformando de volte no array para usarmos o .sort()
+
+ 
+
+    3.3 Lembrar de chamar a própria função após declarar
+
+    3.4 Teste usando o inspector do navegador. NÃO AVANCE CASO ESTEJA DANDO ERRO! CORRIJA!
+
+4. Criar o método buildForm - que constrói o formulário
+
+    4.1 Definir função com os parâmetros brands, product_types do método anterior;
+
+    4.2 Deixar a chamada dessa função buildForm na função load
+
+    
+
+    ATENÇÃO!!! 
+
+        NÃO IMPLEMENTE AGORA A PARTE DOS FILTROS E ORDENAÇÃO! Me refiro ao trechos do  document.querySelectorAll('.input-filter') e eventFilter
+
+        VAMOS IMPLEMENTÁ-LA NO FINAL
+
+ 
+
+    4.3 Dentro da funcão, como está no final da solucao final, crie os laços sobre os arrays(brands, product_types) usando forEach gerando as opçoes a adicionado no elemento da ul:
+
+        Trecho
+
+            <script>
+
+                arrayBrands.forEach( b => {
+
+                option = document.createElement( 'option' );
+
+                option.value = b;
+
+                option.text = b;
+
+                selectFilterBrand.add( option );
+
+            });
+
+            </script>
+
+       
+
+    4.4 Estando tudo ok, executando o projeto do json-server com npm start, e indo na página index.html usando o open live server, ao menos os selects dos formulários devem 
+
+    aparecer 
+
+5. Alterar loadDetails e productItem
+
+    4.1 Usar string literal para atualizar os métodos usando os parametros já passados
+
+    4.2 Aplicar as expressões com ${}, por exemplo ${product.name}, ${product.brand}
+
+6. Criar o método buildCatalog 
+
+    6.1 Esse método recebe a lista de produtos criados no passo 3, no método load
+
+    6.2 Após criar o método, deixar a chamada no método load;
+
+    6.3 Esse método faz um laço sobre os produtos no formato json, e vai usar o método productItem que cria o html do produto para o catalogo, 
+
+        vai se concatendo a string do resultado da chamado do productItem e ao final insere esse conteúdo no html
+
+    6.4 Estando tudo ok, a página já deve carregar os produtos, mas atenção que os filtros ainda não funcionam.
+
+    6.5 Avance apenas se tudo estiver OK;
+
+7. Vamos finalmente criar os tratamentos dos eventos dos seletores no método
+
+    7.1 Criar o método createEventFilters, e deixar sua chamada também na função load;
+
+    7.2 Há os selects de marca e tipo, além do select para ordenação e o campo de texto de busca. Em todos acrescentamos class="input-filter".
+
+        Assim, poderemos recuperar todos de uma vez e adicionarmos o tratador de eventos. Para tal, veja o trecho abaixo:
+
+        <script>
+
+        document.querySelectorAll('.input-filter').forEach(item => {
+
+            item.addEventListener('change', eventFilter);
+
+        });
+
+        </script>
+
+ 
+
+        Aqui há um laço sobre os itens que tem a classe input-filter, adicionando o tratamento do evento change, para executar a callback(função handler) 
+
+        eventFilter que vamos cria a seguir.
+
+ 
+
+        const eventFilter = (event) => {
+
+        }
+
+ 
+
+        Dentro do método, vamos recuperar as referências dos inputs para obter os valores em breve:
+
+ 
+
+        <script>
+
+            const name = inputName.value;
+
+            const brand = selectFilterBrand.options[selectFilterBrand.selectedIndex].value;
+
+            const type = selectFilterType.options[selectFilterType.selectedIndex].value;
+
+            const sortbY = selectSortType.options[selectSortType.selectedIndex].text;
+
+         <script>
+
+ 
+
+         Uma vez tendo os valores dos inpus, podemos aplicar o filtro na colecao de  produtos que temos. 
+
+         Repare o uso do filter sobre a colecao(array) que está no variável result. Veja o código a seguir.
+
+         <code>
+
+            let result = produtosAll;
+
+        
+
+            if(name){
+
+                result = result.filter(p => p.name.toUpperCase().includes(name.toUpperCase()));
+
+            }
+
+            if(brand){
+
+                result = result.filter(p => p.brand == brand);
+
+            }
+
+            if(type){
+
+                result = result.filter(p => p.product_type == type);
+
+            }
+
+        </code>
+
+ 
+
+        A diante, a implementação da ordenação, e o teste da variável sortbY com  switch
+
+        <code>  
+
+             case 'Melhor Avaliados':
+
+                result.sort( (p1, p2) => 
+
+                    (p2.rating | 0) - (p1.rating | 0)
+
+                );
+
+                break;
+
+            case 'Menores Preços':
+
+                result.sort( (p1, p2) => 
+
+                    parseFloat(p1.price) - parseFloat(p2.price)
+
+                    );
+
+                break;
+
+            ....
+
+        </code>
